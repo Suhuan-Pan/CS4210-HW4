@@ -1,9 +1,9 @@
 # -------------------------------------------------------------------------
 # AUTHOR: Suhuan Pan
-# FILENAME: title of the source file
+# FILENAME: deep_learning.py
 # SPECIFICATION: create and train neural networks with tensorflow and keras
 # FOR: CS 4210- Assignment #4
-# TIME SPENT: how long it took you to complete the assignment
+# TIME SPENT: 3 days
 # -----------------------------------------------------------*/
 
 # IMPORTANT NOTE: YOU CAN USE ANY PYTHON LIBRARY TO COMPLETE YOUR CODE.
@@ -37,14 +37,13 @@ n_X_train = len(X_train)
 # For instance, class_names[y_train[0]] = 'Coat'
 class_names = ["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat", "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"]
 n_outputLayer = len(class_names)
-print("Number of output layer is number of class =", n_outputLayer)
+# print("Number of output layer is number of class =", n_outputLayer)
 
 
 # ----------------- build a model ------------------------*/
 # specify the number of hidden layers and neurons in each layer.
 def build_model(num_hidden_layers, num_neurons_hidden, num_neurons_output, learning_rate) :
     # Creating the Neural Network using the Sequential API
-    #  model = keras.models.Sequential()
     model = keras.models.Sequential()
 
     # ---- input Layer with dimension 28 by 28----
@@ -67,8 +66,6 @@ def build_model(num_hidden_layers, num_neurons_hidden, num_neurons_output, learn
     model.compile(loss = "sparse_categorical_crossentropy", optimizer = opt, metrics = ['accuracy'])
 
     return model
-
-
 # ----------------- end of build a model ------------------------*/
 
 
@@ -107,16 +104,17 @@ l = 0.000
 #  ----------------- Iterate through different combinations of hidden layers and neurons
 # looking or the best parameters w.r.t the number of hidden layers
 for i1 in n_hidden_layer_list :
+    
     # looking or the best parameters w.r.t the number of neurons
     for i2 in n_neurons_per_hidden_list :
+        
         # looking or the best parameters w.r.t the learning rate
         for i3 in l_rate :
+            
             # build the model for each combination by calling the function:
-            # model = build_model(num_hidden_layers, num_neurons, input_dim=X_train.shape[1])
             model = build_model(i1, i2, n_outputLayer, i3)
 
             # Train the model on your training data
-            # model.fit(X_train, y_train, epochs=10, batch_size=32, validation_data=(X_val, y_val), verbose=0)
             history = model.fit(X_train, y_train, epochs = n_outputLayer, validation_data = (X_valid, y_valid))
             # epochs = number times that the learning algorithm will work through the entire training dataset.
 
@@ -126,7 +124,7 @@ for i1 in n_hidden_layer_list :
             # To make a prediction, do:
             class_predicted = np.argmax(model.predict(X_test), axis = -1)
 
-            error = 0.00
+            error = 0
 
             for k in range(len(class_predicted)) :
                 if class_predicted[k] != y_test[k] :
