@@ -1,9 +1,9 @@
 # -------------------------------------------------------------------------
 # AUTHOR: Suhuan Pan
-# FILENAME: deep_learning.py
+# FILENAME: main.py
 # SPECIFICATION: create and train neural networks with tensorflow and keras
 # FOR: CS 4210- Assignment #4
-# TIME SPENT: 3 days
+# TIME SPENT: 4 days
 # -----------------------------------------------------------*/
 
 # IMPORTANT NOTE: YOU CAN USE ANY PYTHON LIBRARY TO COMPLETE YOUR CODE.
@@ -37,13 +37,14 @@ n_X_train = len(X_train)
 # For instance, class_names[y_train[0]] = 'Coat'
 class_names = ["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat", "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"]
 n_outputLayer = len(class_names)
-# print("Number of output layer is number of class =", n_outputLayer)
+print("Number of output layer is number of class =", n_outputLayer)
 
 
 # ----------------- build a model ------------------------*/
 # specify the number of hidden layers and neurons in each layer.
 def build_model(num_hidden_layers, num_neurons_hidden, num_neurons_output, learning_rate) :
     # Creating the Neural Network using the Sequential API
+    #  model = keras.models.Sequential()
     model = keras.models.Sequential()
 
     # ---- input Layer with dimension 28 by 28----
@@ -66,6 +67,8 @@ def build_model(num_hidden_layers, num_neurons_hidden, num_neurons_output, learn
     model.compile(loss = "sparse_categorical_crossentropy", optimizer = opt, metrics = ['accuracy'])
 
     return model
+
+
 # ----------------- end of build a model ------------------------*/
 
 
@@ -85,13 +88,24 @@ def build_model(num_hidden_layers, num_neurons_hidden, num_neurons_output, learn
 # print(f"TensorFlow has access to the following devices:\n{tf.config.list_physical_devices()}")
 # print(f"TensorFlow version: {tf.__version__}")
 
+# for tf.keras.utils.plot_model() to work:
+# brew cleanup
+
+# pip install --upgrade pip
+
+# pip install pydot-ng
+
+# brew install graphviz
+
+
+
 
 # ----------------- hyper_parameters -----------------*/
 # Iterate here over number of hidden layers,
 # number of neurons in each hidden layer
 # the learning rate.
-n_hidden_layer_list = [2, 5, 10]
-n_neurons_per_hidden_list = [10, 50, 100]
+n_hidden = [2, 5, 10]
+n_neurons = [10, 50, 100]
 l_rate = [0.01, 0.05, 0.1]
 
 highest_accuracy = 0.000
@@ -103,19 +117,18 @@ l = 0.000
 
 #  ----------------- Iterate through different combinations of hidden layers and neurons
 # looking or the best parameters w.r.t the number of hidden layers
-for i1 in n_hidden_layer_list :
-    
+for i1 in n_hidden :
     # looking or the best parameters w.r.t the number of neurons
-    for i2 in n_neurons_per_hidden_list :
-        
+    for i2 in n_neurons :
         # looking or the best parameters w.r.t the learning rate
         for i3 in l_rate :
-            
             # build the model for each combination by calling the function:
+            # model = build_model(num_hidden_layers, num_neurons, input_dim=X_train.shape[1])
             model = build_model(i1, i2, n_outputLayer, i3)
 
             # Train the model on your training data
-            history = model.fit(X_train, y_train, epochs = n_outputLayer, validation_data = (X_valid, y_valid))
+            # model.fit(X_train, y_train, epochs=10, batch_size=32, validation_data=(X_val, y_val), verbose=0)
+            history = model.fit(X_train, y_train, epochs = 1, validation_data = (X_valid, y_valid), verbose = 0)
             # epochs = number times that the learning algorithm will work through the entire training dataset.
 
             # Evaluate the model on the validation set
@@ -124,27 +137,28 @@ for i1 in n_hidden_layer_list :
             # To make a prediction, do:
             class_predicted = np.argmax(model.predict(X_test), axis = -1)
 
-            error = 0
+            error = 0.00
 
-            for k in range(len(class_predicted)) :
-                if class_predicted[k] != y_test[k] :
+            for k in range(len(class_predicted)):
+                if class_predicted[k] != y_test[k]:
                     error += 1
 
             accuracy = 1 - error / len(class_predicted)
             accuracy = round(accuracy, 4)
 
             # Keep track of the best model configuration
-            if accuracy > highest_accuracy :
+            if accuracy > highest_accuracy:
+
                 highest_accuracy = accuracy
                 model = history
                 h = i1
                 n = i2
                 l = i3
 
-            print("Highest accuracy so far: " + str(highest_accuracy))
-            print("Parameters: ", "Number of Hidden Layers: ", str(h), ", number of neurons: ", str(n),
-                  ", learning rate: ", str([l]))
-            print()
+                print("Highest accuracy so far: " + str(highest_accuracy))
+                print("Parameters: ", "Number of Hidden Layers: ", str(h), ", number of neurons: ", str(n),
+                      ", learning rate: ", str([l]))
+                print()
 
 # After generating all neural networks, print the summary of the best model found
 # The model’s summary() method displays all the model’s layers, including each layer’s name (which is automatically
