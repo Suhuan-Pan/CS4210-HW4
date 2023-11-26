@@ -151,7 +151,6 @@ for i1 in n_hidden :
             if accuracy > highest_accuracy :
                 highest_accuracy = accuracy
                 model = history
-                # history = model
                 h = i1
                 n = i2
                 l = i3
@@ -170,9 +169,9 @@ for i1 in n_hidden :
 # flexibility to fit the training data, but it also means that the model runs the risk of overfitting, especially
 # when you do not have a lot of training data.
 
-# print(model.summary())
-# img_file = './model_arch.png'
-# tf.keras.utils.plot_model(model, to_file = img_file, show_shapes = True, show_layer_names = True)
+print(model.summary())
+img_file = './model_arch.png'
+tf.keras.utils.plot_model(model, to_file = img_file, show_shapes = True, show_layer_names = True)
 
 
 # plotting the learning curves of the best model
