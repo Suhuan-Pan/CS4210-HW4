@@ -123,12 +123,10 @@ for i1 in n_hidden :
         # looking or the best parameters w.r.t the learning rate
         for i3 in l_rate :
             # build the model for each combination by calling the function:
-            # model = build_model(num_hidden_layers, num_neurons, input_dim=X_train.shape[1])
             model = build_model(i1, i2, n_outputLayer, i3)
 
             # Train the model on your training data
-            # model.fit(X_train, y_train, epochs=10, batch_size=32, validation_data=(X_val, y_val), verbose=0)
-            history = model.fit(X_train, y_train, epochs = 1, validation_data = (X_valid, y_valid), verbose = 0)
+            history = model.fit(X_train, y_train, epochs = 5, validation_data = (X_valid, y_valid))
             # epochs = number times that the learning algorithm will work through the entire training dataset.
 
 
@@ -175,7 +173,7 @@ tf.keras.utils.plot_model(model, to_file = img_file, show_shapes = True, show_la
 
 
 # plotting the learning curves of the best model
-pd.DataFrame(history.history).plot(figsize = (8, 5))
+pd.DataFrame(model.history).plot(figsize = (8, 5))
 plt.grid(True)
 plt.gca().set_ylim(0, 1)  # set the vertical range to [0-1]
 plt.show()
