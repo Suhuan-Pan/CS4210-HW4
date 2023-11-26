@@ -37,7 +37,7 @@ n_X_train = len(X_train)
 # For instance, class_names[y_train[0]] = 'Coat'
 class_names = ["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat", "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"]
 n_outputLayer = len(class_names)
-print("Number of output layer is number of class =", n_outputLayer)
+# print("Number of output layer is number of class =", n_outputLayer)
 
 
 # ----------------- build a model ------------------------*/
@@ -79,16 +79,18 @@ def build_model(num_hidden_layers, num_neurons_hidden, num_neurons_output, learn
 # python -m pip install tensorflow-datasets
 # python -m pip install tensorflow-models
 
+# check for tensorflow GPU access and version
+# print(f"TensorFlow has access to the following devices:\n{tf.config.list_physical_devices()}")
+# print(f"TensorFlow version: {tf.__version__}")
+
+# ----------- Fix SSL Error -----------
 # /Users/pan/Desktop/ML-DeepLearning/ML-DeepLearning/venv/lib/python3.7/site-packages/keras/datasets/fashion_mnist.py
 # load data method: base = "https://storage.googleapis.com/tensorflow/tf-keras-datasets/"
 # # change the base to the original data set
 # # base = 'http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/'
 
-# check for tensorflow GPU access and version
-# print(f"TensorFlow has access to the following devices:\n{tf.config.list_physical_devices()}")
-# print(f"TensorFlow version: {tf.__version__}")
 
-# for tf.keras.utils.plot_model() to work:
+# ----------- For tf.keras.utils.plot_model() to work -----------
 # brew cleanup
 
 # pip install --upgrade pip
@@ -96,8 +98,6 @@ def build_model(num_hidden_layers, num_neurons_hidden, num_neurons_output, learn
 # pip install pydot-ng
 
 # brew install graphviz
-
-
 
 
 # ----------------- hyper_parameters -----------------*/
@@ -131,6 +131,7 @@ for i1 in n_hidden :
             history = model.fit(X_train, y_train, epochs = 1, validation_data = (X_valid, y_valid), verbose = 0)
             # epochs = number times that the learning algorithm will work through the entire training dataset.
 
+
             # Evaluate the model on the validation set
             # Calculate the accuracy of this neural network
             # and store its value if it is the highest so far.
@@ -139,18 +140,18 @@ for i1 in n_hidden :
 
             error = 0.00
 
-            for k in range(len(class_predicted)):
-                if class_predicted[k] != y_test[k]:
+            for k in range(len(class_predicted)) :
+                if class_predicted[k] != y_test[k] :
                     error += 1
 
             accuracy = 1 - error / len(class_predicted)
             accuracy = round(accuracy, 4)
 
             # Keep track of the best model configuration
-            if accuracy > highest_accuracy:
-
+            if accuracy > highest_accuracy :
                 highest_accuracy = accuracy
                 model = history
+                # history = model
                 h = i1
                 n = i2
                 l = i3
@@ -160,6 +161,7 @@ for i1 in n_hidden :
                       ", learning rate: ", str([l]))
                 print()
 
+
 # After generating all neural networks, print the summary of the best model found
 # The model’s summary() method displays all the model’s layers, including each layer’s name (which is automatically
 # generated unless you set it when creating the layer), its
@@ -168,9 +170,10 @@ for i1 in n_hidden :
 # flexibility to fit the training data, but it also means that the model runs the risk of overfitting, especially
 # when you do not have a lot of training data.
 
-print(model.summary())
-img_file = './model_arch.png'
-tf.keras.utils.plot_model(model, to_file = img_file, show_shapes = True, show_layer_names = True)
+# print(model.summary())
+# img_file = './model_arch.png'
+# tf.keras.utils.plot_model(model, to_file = img_file, show_shapes = True, show_layer_names = True)
+
 
 # plotting the learning curves of the best model
 pd.DataFrame(history.history).plot(figsize = (8, 5))
