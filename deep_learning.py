@@ -1,9 +1,9 @@
 # -------------------------------------------------------------------------
 # AUTHOR: Suhuan Pan
-# FILENAME: main.py
+# FILENAME: deep_learning.py
 # SPECIFICATION: create and train neural networks with tensorflow and keras
-# FOR: CS 4210- Assignment #4
-# TIME SPENT: 4 days
+# FOR: CS 4210- Assignment #4, Q3, deep_learning.py
+# TIME SPENT: one week
 # -----------------------------------------------------------*/
 
 # IMPORTANT NOTE: YOU CAN USE ANY PYTHON LIBRARY TO COMPLETE YOUR CODE.
