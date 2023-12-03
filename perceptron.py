@@ -2,7 +2,7 @@
 # AUTHOR: Suhuan Pan
 # FILENAME: ML-HW4/ML-HW4/perceptron.py
 # SPECIFICATION: perceptron classifier and multiple layer classifier
-# FOR: CS 4210- Assignment #4
+# FOR: CS 4210- Assignment #4, Q2, perceptron.py 
 # TIME SPENT: 5 hours
 # -----------------------------------------------------------*/
 import math
