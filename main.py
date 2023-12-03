@@ -133,7 +133,7 @@ for i1 in n_hidden :
             # Evaluate the model on the validation set
             # Calculate the accuracy of this neural network
             # and store its value if it is the highest so far.
-            # To make a prediction, do:
+            # To make a prediction array, do:
             class_predicted = np.argmax(model.predict(X_test), axis = -1)
 
             error = 0.00
@@ -148,7 +148,6 @@ for i1 in n_hidden :
             # Keep track of the best model configuration
             if accuracy > highest_accuracy :
                 highest_accuracy = accuracy
-                model = history
                 h = i1
                 n = i2
                 l = i3
@@ -173,7 +172,7 @@ tf.keras.utils.plot_model(model, to_file = img_file, show_shapes = True, show_la
 
 
 # plotting the learning curves of the best model
-pd.DataFrame(model.history).plot(figsize = (8, 5))
+pd.DataFrame(history.history).plot(figsize = (8, 5))
 plt.grid(True)
 plt.gca().set_ylim(0, 1)  # set the vertical range to [0-1]
 plt.show()
