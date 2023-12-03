@@ -108,6 +108,7 @@ n_hidden = [2, 5, 10]
 n_neurons = [10, 50, 100]
 l_rate = [0.01, 0.05, 0.1]
 
+# initialization 
 highest_accuracy = 0.000
 model = None
 history = None
@@ -126,7 +127,7 @@ for i1 in n_hidden :
             model = build_model(i1, i2, n_outputLayer, i3)
 
             # Train the model on your training data
-            history = model.fit(X_train, y_train, epochs = 5, validation_data = (X_valid, y_valid))
+            history = model.fit(X_train, y_train, epochs = 30, validation_data = (X_valid, y_valid))
             # epochs = number times that the learning algorithm will work through the entire training dataset.
 
 
